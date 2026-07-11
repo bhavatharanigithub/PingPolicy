@@ -1,0 +1,30 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: polling-alerting-service
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:pingpolicy}
+    username: ${DB_USER:pingpolicy}
+    password: ${DB_PASSWORD:pingpolicy}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+pingpolicy:
+  registry-url: ${REGISTRY_URL:http://localhost:8081}
+  alert-webhook-url: ${ALERT_WEBHOOK_URL:}
+  scheduler:
+    fixed-rate-ms: ${POLL_FIXED_RATE_MS:30000}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
